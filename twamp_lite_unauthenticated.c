@@ -49,7 +49,7 @@ struct Twamp_RawPacket* Twamp_lite_unauthenticated_HandleTestPacket(struct Twamp
 
     rawResponse->size = rawResponseSize;
 
-    memcpy(rawResponse->data, response, sizeof(*response));
+    memcpy(rawResponse->data, response, sizeof(struct Twamp_MessageReflectorUnAuthenticated));
     twamp_free(response);
 
     return rawResponse;

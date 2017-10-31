@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 project(twamp)
 
 set(CMAKE_C_STANDARD 11)
+SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(TWAMP_ALLOC_SOURCES twamp_alloc.c)
 #add_library(twamp_alloc ${TWAMP_ALLOC_SOURCES})
