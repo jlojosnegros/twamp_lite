@@ -1,0 +1,33 @@
+
+include(ExternalProject)
+
+#Builds all the third party projects
+# GLOBAL_OUTPUT_PATH should be defined by the parent script.
+# It will be used as output directory for all *.lib, *.dll, *.a, *.so ... etc files.
+
+find_package(Git REQUIRED)
+
+
+#== nanomsg ==
+ExternalProject_Add(
+    nanomsg_prj
+    SOURCE_DIR "${CMAKE_SOURCE_DIR}/3pp/nanomsg"
+    GIT_REPOSITORY https://github.com/nanomsg/nanomsg
+    TIMEOUT 10
+    #UPDATE_COMMAND ${GIT_EXECUTABLE} pull
+    CMAKE_ARGS  -DNN_STATIC_LIB=ON -DCMAKE_INSTALL_PREFIX=${GLOBAL_OUTPUT_PATH}/nanomsg
+    CONFIGURE_COMMAND  ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/3pp/nanomsg
+    BUILD_COMMAND make COMMAND make all
+    INSTALL_COMMAND ""
+    LOG_DOWNLOAD ON
+    EXCLUDE_FROM_ALL TRUE
+   )
+
+# Expose required variable (NANOMSG_INCLUDE_DIR) to parent scope
+ExternalProject_Get_Property(nanomsg_prj source_dir)
+set(NANOMSG_INCLUDE_DIR ${source_dir}/src CACHE INTERNAL "Path to include folder for nanomsg")
+include_directories(${NANOMSG_INCLUDE_DIR})
+
+ExternalProject_Get_Property(nanomsg_prj binary_dir)
+link_directories(${binary_dir})
+#set(googleBenchmark_LIBRARIES "${CMAKE_STATIC_LIBRARY_PREFIX}benchmark${CMAKE_STATIC_LIBRARY_SUFFIX}")

@@ -13,4 +13,8 @@ set(TWAMP_LITE_UNAUTHENTICATED_SOURCES twamp_lite_unauthenticated.c)
 add_library(twamp_lite_unauthenticated ${TWAMP_LITE_UNAUTHENTICATED_SOURCES})
 
 set(SOURCE_FILES main.c )
-add_executable(twamp ${SOURCE_FILES})
+add_executable(twamp ${SOURCE_FILES})#3-party libraries
+
+#3-party libraries
+set(GLOBAL_OUTPUT_PATH ${LIBRARY_OUTPUT_PATH})
+include(CMakeLists_ExternalProjects.txt)
