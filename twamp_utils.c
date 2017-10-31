@@ -4,6 +4,8 @@
 #include "twamp_common_datatypes.h"
 #include "twamp_utils.h"
 #include <sys/time.h>
+#include <stddef.h>
+#include <memory.h>
 
 struct Twamp_Timestamp twamp_utils_GetTime(void)
 {

@@ -8,6 +8,9 @@
 #include "twamp_alloc.h"
 
 #include <assert.h>
+#include <memory.h>
+#include <stddef.h>
+
 
 struct Twamp_RawPacket* Twamp_lite_unauthenticated_HandleTestPacket(struct Twamp_TestPacket* testPacket)
 {
@@ -47,7 +50,7 @@ struct Twamp_RawPacket* Twamp_lite_unauthenticated_HandleTestPacket(struct Twamp
     rawResponse->size = rawResponseSize;
 
     memcpy(rawResponse->data, response, sizeof(*response));
-    twamp_free(respose);
+    twamp_free(response);
 
     return rawResponse;
 
@@ -83,13 +86,13 @@ Twamp_lite_unauthenticated_DecodeTestMessage(struct Twamp_MessageTestUnauthentic
     messageReflectorUnAuthenticated->receiveTimestamp.seconds = hton(receivedTimestamp->seconds);
     messageReflectorUnAuthenticated->receiveTimestamp.fraction = hton(receivedTimestamp->fraction);
     /* data from the incoming message */
-    messageReflectorUnAuthenticated->sequenceNumber = messageTestUnauthenticated.sequenceNumber;
-    messageReflectorUnAuthenticated->senderSequenceNumber = messageTestUnauthenticated.sequenceNumber;
+    messageReflectorUnAuthenticated->sequenceNumber = messageTestUnauthenticated->sequenceNumber;
+    messageReflectorUnAuthenticated->senderSequenceNumber = messageTestUnauthenticated->sequenceNumber;
     messageReflectorUnAuthenticated->senderTTL = 255; /* by definition */
-    messageReflectorUnAuthenticated->senderTimestamp.seconds = messageTestUnauthenticated.timestamp.seconds;
-    messageReflectorUnAuthenticated->senderTimestamp.fraction = messageTestUnauthenticated.timestamp.fraction;
-    messageReflectorUnAuthenticated->senderErrorEstimate = messageTestUnauthenticated.errorEstimate;
-    messageReflectorUnAuthenticated->errorEstimate = hton(twamp_utils_GetErrorEstimate());
+    messageReflectorUnAuthenticated->senderTimestamp.seconds = messageTestUnauthenticated->timestamp.seconds;
+    messageReflectorUnAuthenticated->senderTimestamp.fraction = messageTestUnauthenticated->timestamp.fraction;
+    messageReflectorUnAuthenticated->senderErrorEstimate = messageTestUnauthenticated->errorEstimate;
+    messageReflectorUnAuthenticated->errorEstimate = twamp_utils_GetErrorEstimate(); /* todo may need hton */
 
     return messageReflectorUnAuthenticated;
 }

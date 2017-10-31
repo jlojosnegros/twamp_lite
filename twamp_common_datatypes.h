@@ -51,7 +51,7 @@ struct Twamp_MessageReflectorUnAuthenticated
     struct Twamp_Timestamp receiveTimestamp;
     uint32_t senderSequenceNumber;
     struct Twamp_Timestamp senderTimestamp;
-    struct Twamp_MessageErrorEstimage senderErrorEstimate;
+    struct Twamp_MessageErrorEstimate senderErrorEstimate;
     uint8_t mbz_[2];
     uint8_t senderTTL;
 };
